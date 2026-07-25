@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>勤怠計算アプリ</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+
+  <!-- manifest.json（正しいパス） -->
+  <link rel="manifest" href="/kinmu-app/manifest.json">
+
+  <!-- Service Worker（絶対パスで登録） -->
   <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/kinmu-app/service-worker.js");
+    }
   </script>
 
 </head>
@@ -49,15 +55,15 @@
   <input type="number" id="wage" value="1180">
 
   <button id="calc">計算する</button>
-
   <button id="save">この勤務を保存する</button>
-
 
   <div id="result" class="section-card"></div>
 
-  <!-- ★ここに追加（確定位置） -->
+  <!-- 月次ページへ -->
   <button onclick="location.href='monthly.html'">月次一覧を見る</button>
 
+  <!-- JS -->
   <script src="app.js"></script>
+
 </body>
 </html>
