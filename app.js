@@ -5,14 +5,8 @@ document.getElementById("pattern").onchange = () => {
   document.getElementById("am_section").style.display = "none";
   document.getElementById("pm_section").style.display = "none";
 
-  if (p === "am") {
-    document.getElementById("am_section").style.display = "block";
-  }
-
-  if (p === "pm") {
-    document.getElementById("pm_section").style.display = "block";
-  }
-
+  if (p === "am") document.getElementById("am_section").style.display = "block";
+  if (p === "pm") document.getElementById("pm_section").style.display = "block";
   if (p === "both") {
     document.getElementById("am_section").style.display = "block";
     document.getElementById("pm_section").style.display = "block";
@@ -34,7 +28,6 @@ function calcLateHours(start, end) {
 
   if (e <= lateStart) return 0;
   if (s >= lateStart) return (e - s) / (1000 * 60 * 60);
-
   return (e - lateStart) / (1000 * 60 * 60);
 }
 
@@ -43,7 +36,7 @@ function ceil15(min) {
   return Math.ceil(min / 15) * 15;
 }
 
-// H.MM形式に変換
+// H.MM形式に変換（勤務簿用）
 function toHM(hours) {
   const min = ceil15(hours * 60);
   const H = Math.floor(min / 60);
@@ -64,10 +57,8 @@ document.getElementById("calc").onclick = () => {
   const pmEnd = document.getElementById("pm_end").value;
   const wage = Number(document.getElementById("wage").value);
 
-  let amHours = 0;
-  let pmHours = 0;
-  let amLate = 0;
-  let pmLate = 0;
+  let amHours = 0, pmHours = 0;
+  let amLate = 0, pmLate = 0;
 
   // 午前
   if (amStart && amEnd) {
@@ -87,100 +78,43 @@ document.getElementById("calc").onclick = () => {
   // 時間外（8時間超）
   const overtimeHours = Math.max(0, totalHours - 8);
 
-  // 割増発生勤務帯の判定
-  let overtimeTarget = ""; // "am" or "pm" or ""
-  if (overtimeHours > 0) {
-    if (amHours >= 8) {
-      overtimeTarget = "am";
-    } else {
-      overtimeTarget = "pm";
-    }
-  }
-
-  // 時間外割増（勤務簿用：0.27時間 × 時間外）
+  // 割増（勤務簿用）
   const overtimeExtraMin = ceil15(overtimeHours * 0.27 * 60);
-
-  // 深夜割増（勤務簿用：0.25時間 × 深夜）
   const lateExtraMin = ceil15(totalLate * 0.25 * 60);
 
-  // 割増を勤務帯に加算
-  let amExtraMin = 0;
-  let pmExtraMin = 0;
+  let amExtraMin = 0, pmExtraMin = 0;
 
-  if (overtimeTarget === "am") amExtraMin += overtimeExtraMin;
-  if (overtimeTarget === "pm") pmExtraMin += overtimeExtraMin;
+  if (overtimeHours > 0) {
+    if (amHours >= 8) amExtraMin += overtimeExtraMin;
+    else pmExtraMin += overtimeExtraMin;
+  }
 
   if (amLate > 0) amExtraMin += lateExtraMin;
   if (pmLate > 0) pmExtraMin += lateExtraMin;
 
-  // 割増（時間）
-  const amExtraHours = amExtraMin / 60;
-  const pmExtraHours = pmExtraMin / 60;
-
   // 勤務簿記入時間（午前・午後）
-  const amBookHours = amHours + amExtraHours;
-  const pmBookHours = pmHours + pmExtraHours;
+  const amBookHours = amHours + amExtraMin / 60;
+  const pmBookHours = pmHours + pmExtraMin / 60;
 
   const amBookText = toHM(amBookHours);
   const pmBookText = toHM(pmBookHours);
 
-  // 給与計算用に勤務簿のH.MMを小数時間へ変換
-  const amDecimal = hmToDecimal(Number(amBookText));
-  const pmDecimal = hmToDecimal(Number(pmBookText));
-  const totalDecimalHours = amDecimal + pmDecimal;
+  // 合計勤務簿記入時間（H.MM）
+  const totalBookHM = toHM(amBookHours + pmBookHours);
 
-  // 給料計算（法律上の割増率）
-  const normalHours = totalDecimalHours - overtimeHours - totalLate;
-  const normalPay = normalHours * wage;
-  const overtimePay = overtimeHours * wage * 1.27;
-  const latePay = totalLate * wage * 1.25;
-  const totalPay = Math.floor(normalPay + overtimePay + latePay);
+  // 給与計算は勤務簿の小数時間を使う（←最重要）
+  const totalDecimalHours =
+    hmToDecimal(amBookText) + hmToDecimal(pmBookText);
 
-  // バッジ表示のために午前・午後カードの要素を取得
-  const amCard = document.getElementById("am_section");
-  const pmCard = document.getElementById("pm_section");
-
-  // 既存バッジを消す
-  amCard.querySelectorAll(".badge").forEach(b => b.remove());
-  pmCard.querySelectorAll(".badge").forEach(b => b.remove());
-
-  // 午前カードにバッジ追加
-  if (amExtraMin > 0) {
-    const badge = document.createElement("span");
-    badge.className = "badge badge-overtime";
-    badge.innerText = "時間外";
-    amCard.querySelector(".section-title")?.appendChild(badge);
-  }
-
-  if (amLate > 0) {
-    const badge = document.createElement("span");
-    badge.className = "badge badge-late";
-    badge.innerText = "深夜";
-    amCard.querySelector(".section-title")?.appendChild(badge);
-  }
-
-  // 午後カードにバッジ追加
-  if (pmExtraMin > 0) {
-    const badge = document.createElement("span");
-    badge.className = "badge badge-overtime";
-    badge.innerText = "時間外";
-    pmCard.querySelector(".section-title")?.appendChild(badge);
-  }
-
-  if (pmLate > 0) {
-    const badge = document.createElement("span");
-    badge.className = "badge badge-late";
-    badge.innerText = "深夜";
-    pmCard.querySelector(".section-title")?.appendChild(badge);
-  }
+  const totalPay = Math.floor(totalDecimalHours * wage);
 
   document.getElementById("result").innerText =
     `午前勤務簿記入時間：${amBookText}
 午後勤務簿記入時間：${pmBookText}
+合計勤務簿記入時間：${totalBookHM}
 
-通常賃金：${Math.floor(normalPay)}円
-時間外：${overtimeHours.toFixed(2)}時間 → ${Math.floor(overtimePay)}円
-深夜：${totalLate.toFixed(2)}時間 → ${Math.floor(latePay)}円
---------------------------------
+時間外：${overtimeHours.toFixed(2)}時間
+深夜：${totalLate.toFixed(2)}時間
+
 合計賃金：${totalPay}円`;
 };
