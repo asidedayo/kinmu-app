@@ -1,0 +1,141 @@
+/* 全体の基本デザイン（スマホアプリ風） */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f7fa;
+  padding: 20px;
+  margin: 0;
+}
+
+/* タイトル */
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* セクションカード（午前・午後・結果など） */
+.section-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* セクションタイトル */
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #444;
+}
+
+/* 入力欄 */
+input, select {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+
+/* ボタン（スマホアプリ風） */
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin-top: 10px;
+}
+
+/* ボタン押下時 */
+button:active {
+  transform: scale(0.98);
+}
+
+/* 結果カード */
+#result {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-size: 20px;
+  white-space: pre-line;
+}
+
+/* 午前カード（青系） */
+#am_section.section-card {
+  border-left: 6px solid #4da3ff;
+}
+
+/* 午後カード（オレンジ系） */
+#pm_section.section-card {
+  border-left: 6px solid #ff9f43;
+}
+
+/* 割増バッジ */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-right: 6px;
+  color: white;
+}
+
+.badge-overtime {
+  background: #ffcc00;
+  color: #333;
+}
+
+.badge-late {
+  background: #ff4d4d;
+}
+
+/* スマホ向け余白調整 */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 22px;
+  }
+  .section-card {
+    padding: 16px;
+  }
+  input, select {
+    font-size: 17px;
+  }
+  button {
+    font-size: 18px;
+  }
+  #result {
+    font-size: 18px;
+  }
+}
+
+/* ふわっと出るアニメーション */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* カードにアニメーションを適用 */
+.section-card,
+#result {
+  animation: fadeSlideIn 0.45s ease-out;
+}
