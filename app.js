@@ -118,6 +118,11 @@ document.getElementById("calc").onclick = () => {
   const amBookText = toHM(amBookHours);
   const pmBookText = toHM(pmBookHours);
 
+  // 給与計算用に勤務簿のH.MMを小数時間へ変換
+  const amDecimal = hmToDecimal(amBookHours);
+  const pmDecimal = hmToDecimal(pmBookHours);
+  const totalDecimalHours = amDecimal + pmDecimal;
+
   // 給料計算（法律上の割増率）
   const normalHours = totalHours - overtimeHours - totalLate;
   const normalPay = normalHours * wage;
