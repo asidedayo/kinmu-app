@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>月次一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h2>月次一覧</h2>
+
+  <label>表示する月</label>
+  <input type="month" id="selectMonth">
+
+  <button id="showMonthly">この月の勤務を表示する</button>
+
+  <div class="month-nav">
+  <button id="prevMonth">前月</button>
+  <button id="nextMonth">翌月</button>
+  </div>
+
+  <table id="monthlyTable">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>勤務時間</th>
+        <th>賃金</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button id="downloadCSV">CSVダウンロード</button>
+
+  <h3 id="summary"></h3>
+
+  <button onclick="location.href='index.html'">戻る</button>
+
+  <script src="monthly.js"></script>
+
+</body>
+</html>

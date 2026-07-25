@@ -1,7 +1,7 @@
 {
   "name": "勤務簿アプリ",
   "short_name": "勤務簿",
-  "start_url": "http://192.168.0.11:5500/index.html",
+  "start_url": "/",
   "display": "standalone",
 
   "background_color": "#f5f7fa",

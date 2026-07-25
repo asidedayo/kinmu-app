@@ -55,6 +55,7 @@ button {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   margin-top: 10px;
+  cursor: pointer;
 }
 
 /* ボタン押下時 */
@@ -138,4 +139,114 @@ button:active {
 .section-card,
 #result {
   animation: fadeSlideIn 0.45s ease-out;
+}
+
+/* ================================
+   月次一覧テーブル（現代的デザイン）
+   ================================ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ヘッダー（青系グラデーション） */
+th {
+  background: linear-gradient(135deg, #4a90e2, #357ae8);
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* データ行 */
+td {
+  padding: 14px;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+/* 行ホバー */
+tr:hover td {
+  background: #f7faff;
+}
+
+/* 最終行のボーダー消し */
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* 削除ボタン（テーブル用） */
+td .delete-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+td .delete-btn:hover {
+  background: #c0392b;
+}
+
+/* ================================
+   月次サマリーカード（合計欄＋残勤務時間）
+   ================================ */
+.summary-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item .label {
+  color: #555;
+  font-weight: 600;
+}
+
+.summary-item .value {
+  font-weight: 700;
+  color: #333;
+}
+
+/* 残勤務時間だけ色を変える（注意喚起） */
+.summary-item.remaining .value {
+  color: #e67e22;
+  font-weight: 700;
+}
+
+.month-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.month-nav button {
+  flex: 1;
+  background: #357ae8;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
 }
