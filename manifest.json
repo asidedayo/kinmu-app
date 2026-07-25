@@ -1,8 +1,8 @@
 {
   "name": "勤務簿アプリ",
   "short_name": "勤務簿",
-  "start_url": "/kinmu-app/",
-  "scope": "/kinmu-app/",
+  "start_url": "/kintai-app/",
+  "scope": "/kintai-app/",
   "display": "standalone",
 
   "background_color": "#f5f7fa",

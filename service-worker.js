@@ -1,15 +1,15 @@
 const CACHE_NAME = "kintai-cache-v3";
 
 const FILES_TO_CACHE = [
-  "/kinmu-app/",
-  "/kinmu-app/index.html",
-  "/kinmu-app/style.css",
-  "/kinmu-app/app.js",
-  "/kinmu-app/monthly.html",
-  "/kinmu-app/monthly.js",
-  "/kinmu-app/manifest.json",
-  "/kinmu-app/icon-192.png",
-  "/kinmu-app/icon-512.png"
+  "/kintai-app/",
+  "/kintai-app/index.html",
+  "/kintai-app/style.css",
+  "/kintai-app/app.js",
+  "/kintai-app/monthly.html",
+  "/kintai-app/monthly.js",
+  "/kintai-app/manifest.json",
+  "/kintai-app/icon-192.png",
+  "/kintai-app/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
