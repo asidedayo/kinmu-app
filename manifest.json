@@ -1,11 +1,13 @@
 {
   "name": "勤務簿アプリ",
   "short_name": "勤務簿",
-  "start_url": "/",
+  "start_url": "/kinmu-app/",
+  "scope": "/kinmu-app/",
   "display": "standalone",
 
   "background_color": "#f5f7fa",
   "theme_color": "#4CAF50",
+
   "icons": [
     {
       "src": "icon-192.png",
